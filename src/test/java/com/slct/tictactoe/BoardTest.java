@@ -63,4 +63,76 @@ class BoardTest {
 
         assertFalse(result);
     }
+
+    @Test
+    void shouldDisplayEmptyBoard() {
+        Board board = new Board();
+
+        String result = board.display();
+
+        String expected = String.join(System.lineSeparator(),
+                "▁▁▁▁▁▁",
+                "| | | |",
+                "| | | |",
+                "| | | |",
+                "▔▔▔▔▔▔"
+        );
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void shouldDisplayBoardWithPlacedSymbol() {
+        Board board = new Board();
+        board.makeMove(1, 1, Player.X);
+
+        String result = board.display();
+
+        String expected = String.join(System.lineSeparator(),
+                "▁▁▁▁▁▁",
+                "| | | |",
+                "| |X| |",
+                "| | | |",
+                "▔▔▔▔▔▔"
+        );
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void shouldDisplayBoardWithBothPlayersSymbols() {
+        Board board = new Board();
+        board.makeMove(1, 1, Player.X);
+        board.makeMove(1, 0, Player.O);
+
+        String result = board.display();
+
+        String expected = String.join(System.lineSeparator(),
+                "▁▁▁▁▁▁",
+                "| | | |",
+                "|O|X| |",
+                "| | | |",
+                "▔▔▔▔▔▔"
+        );
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void shouldNotDisplayBoardWithoutPlacedSymbol() {
+        Board board = new Board();
+        board.makeMove(0, 0, Player.X);
+
+        String result = board.display();
+
+        String emptyBoard = String.join(System.lineSeparator(),
+                "▁▁▁▁▁▁",
+                "| | | |",
+                "| | | |",
+                "| | | |",
+                "▔▔▔▔▔▔"
+        );
+
+        assertNotEquals(emptyBoard, result);
+    }
 }
