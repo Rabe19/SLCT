@@ -40,4 +40,26 @@ public class Board {
     private boolean isValidPosition(int row, int column) {
         return row >= 0 && row < 3 && column >= 0 && column < 3;
     }
+
+    public String display() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("▁▁▁▁▁▁").append(System.lineSeparator());
+
+        for (int row = 0; row < 3; row++) {
+            builder.append("|");
+
+            for (int column = 0; column < 3; column++) {
+                Player player = cells[row][column];
+                builder.append(player == null ? " " : player.name());
+                builder.append("|");
+            }
+
+            builder.append(System.lineSeparator());
+        }
+
+        builder.append("▔▔▔▔▔▔");
+
+        return builder.toString();
+    }
 }
