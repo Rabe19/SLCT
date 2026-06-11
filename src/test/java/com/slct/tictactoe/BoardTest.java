@@ -135,4 +135,85 @@ class BoardTest {
 
         assertNotEquals(emptyBoard, result);
     }
+
+    @Test
+    void shouldReturnRunningWhenGameHasNoWinnerAndBoardIsNotFull() {
+        Board board = new Board();
+
+        GameState result = board.getGameState();
+
+        assertEquals(GameState.RUNNING, result);
+    }
+
+    @Test
+    void shouldDetectXWinningRow() {
+        Board board = new Board();
+
+        board.makeMove(0, 0, Player.X);
+        board.makeMove(0, 1, Player.X);
+        board.makeMove(0, 2, Player.X);
+
+        GameState result = board.getGameState();
+
+        assertEquals(GameState.X_WON, result);
+    }
+
+    @Test
+    void shouldDetectOWinningColumn() {
+        Board board = new Board();
+
+        board.makeMove(0, 1, Player.O);
+        board.makeMove(1, 1, Player.O);
+        board.makeMove(2, 1, Player.O);
+
+        GameState result = board.getGameState();
+
+        assertEquals(GameState.O_WON, result);
+    }
+
+    @Test
+    void shouldDetectXWinningDiagonal() {
+        Board board = new Board();
+
+        board.makeMove(0, 0, Player.X);
+        board.makeMove(1, 1, Player.X);
+        board.makeMove(2, 2, Player.X);
+
+        GameState result = board.getGameState();
+
+        assertEquals(GameState.X_WON, result);
+    }
+
+    @Test
+    void shouldDetectDrawWhenBoardIsFullAndNoPlayerWon() {
+        Board board = new Board();
+
+        board.makeMove(0, 0, Player.X);
+        board.makeMove(0, 1, Player.O);
+        board.makeMove(0, 2, Player.X);
+
+        board.makeMove(1, 0, Player.X);
+        board.makeMove(1, 1, Player.O);
+        board.makeMove(1, 2, Player.O);
+
+        board.makeMove(2, 0, Player.O);
+        board.makeMove(2, 1, Player.X);
+        board.makeMove(2, 2, Player.X);
+
+        GameState result = board.getGameState();
+
+        assertEquals(GameState.DRAW, result);
+    }
+
+    @Test
+    void shouldNotReturnDrawWhenBoardIsNotFull() {
+        Board board = new Board();
+
+        board.makeMove(0, 0, Player.X);
+        board.makeMove(0, 1, Player.O);
+
+        GameState result = board.getGameState();
+
+        assertNotEquals(GameState.DRAW, result);
+    }
 }
