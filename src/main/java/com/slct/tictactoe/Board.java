@@ -132,4 +132,12 @@ public class Board {
 
         return true;
     }
+
+    public void startNewGame() {
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
+                cells[row][column] = null;
+            }
+        }
+    }
 }

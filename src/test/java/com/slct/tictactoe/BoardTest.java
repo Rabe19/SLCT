@@ -216,4 +216,45 @@ class BoardTest {
 
         assertNotEquals(GameState.DRAW, result);
     }
+
+    @Test
+    void shouldStartNewGameWithEmptyBoard() {
+        Board board = new Board();
+
+        board.makeMove(0, 0, Player.X);
+        board.makeMove(1, 1, Player.O);
+
+        board.startNewGame();
+
+        assertTrue(board.isCellEmpty(0, 0));
+        assertTrue(board.isCellEmpty(1, 1));
+    }
+
+    @Test
+    void shouldReturnRunningAfterStartingNewGame() {
+        Board board = new Board();
+
+        board.makeMove(0, 0, Player.X);
+        board.makeMove(0, 1, Player.X);
+        board.makeMove(0, 2, Player.X);
+
+        assertEquals(GameState.X_WON, board.getGameState());
+
+        board.startNewGame();
+
+        assertEquals(GameState.RUNNING, board.getGameState());
+    }
+
+    @Test
+    void shouldAllowMoveAfterStartingNewGame() {
+        Board board = new Board();
+
+        board.makeMove(0, 0, Player.X);
+        board.startNewGame();
+
+        boolean result = board.makeMove(0, 0, Player.O);
+
+        assertTrue(result);
+        assertEquals(Player.O, board.getCell(0, 0));
+    }
 }
